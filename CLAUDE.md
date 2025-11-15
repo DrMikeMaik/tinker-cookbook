@@ -52,7 +52,7 @@ This separation ensures:
 
 ## ✅ What Has Been Accomplished
 
-### Session 1: Initial Setup (2025-11-13)
+### Session 1: Initial Setup & Core Experiments (2025-11-13)
 
 **Explored the Repository**:
 - ✅ Understood tinker-cookbook structure and purpose
@@ -65,15 +65,32 @@ This separation ensures:
 - ✅ `LEARNING_PLAN.md` - 8-week roadmap from basics to production
 - ✅ `README.md` - Overview of experiments and NPC use case
 
-**Built First Experiment** (`01-sentiment-classification/`):
-- ✅ Training script (`train.py`) based on `sl_basic.py`
-- ✅ 30 NPC dialogue examples in JSONL format
-- ✅ Detailed README with setup instructions
-- ✅ Configured for Llama-3.2-1B with LoRA (rank=32, lr=2e-4)
+**Built Three Core Experiments** (ready to run):
+
+1. **Experiment 01: Sentiment Classification** (`01-sentiment-classification/`)
+   - ✅ Training script (`train.py`) based on `sl_basic.py`
+   - ✅ 30 NPC dialogue examples in JSONL format
+   - ✅ 3-way classification: POSITIVE/NEGATIVE/NEUTRAL
+   - ✅ Configured for Llama-3.2-1B with LoRA (rank=32, lr=2e-4)
+   - **Note**: User preferred routing and jailbreak detection, but this remains as learning reference
+
+2. **Experiment 02: Routing Node** (`02-routing-node/`) ⭐ **PRIORITY**
+   - ✅ Training script for 4-way routing classification
+   - ✅ 48 training examples (RAG / game_state / both / neither)
+   - ✅ Structured JSON output format
+   - ✅ Directly applicable to LangGraph flow
+   - **Expected**: 20-40x faster than LLM API, perfect JSON compliance
+
+3. **Experiment 03: Jailbreak Detection** (`03-jailbreak-detection/`) ⭐ **CRITICAL**
+   - ✅ Training script for binary jailbreak classification
+   - ✅ 48 training examples (24 safe, 24 jailbreak attempts)
+   - ✅ First line of defense for production NPC safety
+   - ✅ Detects prompt injection, role manipulation, command injection
+   - **Expected**: 99%+ accuracy, <50ms detection time
 
 **Git Operations**:
 - ✅ Branch: `claude/learning-tool-exploration-011CV5jpQncxAkeGr6dLZ3tE`
-- ✅ Committed all learning materials
+- ✅ Committed all experiments separately
 - ✅ Pushed to remote
 
 ---
@@ -83,31 +100,41 @@ This separation ensures:
 **Phase**: Learning & Experimentation (Week 1 of 8-week plan)
 
 **Ready to Execute**:
-- First experiment is fully set up and ready to run
-- Training data created (30 sentiment classification examples)
-- Training script configured and documented
+- ✅ Three experiments fully set up and ready to run
+- ✅ Training data created for all experiments
+- ✅ Training scripts configured and documented
+- ✅ Focus shifted from sentiment to routing + jailbreak (better production value)
+
+**Recommended Execution Order**:
+1. **Routing Node** (Experiment 02) - Most impactful for LangGraph
+2. **Jailbreak Detection** (Experiment 03) - Critical for safety
+3. **Sentiment** (Experiment 01) - Optional learning reference
 
 **Next Immediate Steps**:
-1. Run the sentiment classification experiment
-2. Monitor training metrics (loss, accuracy)
-3. Evaluate the fine-tuned model
-4. Compare latency vs current LLM approach
+1. User will run experiments and observe training
+2. Analyze training metrics (loss, accuracy)
+3. Test inference latency and JSON format compliance
+4. Compare results with current LLM approach
+5. Iterate on training data based on results
 
 ---
 
 ## 📋 Next Steps & Roadmap
 
 ### Immediate (This Week)
-- [ ] Run `01-sentiment-classification/train.py`
-- [ ] Analyze training results
-- [ ] Test inference latency of fine-tuned model
-- [ ] Document findings in experiment README
+- [ ] Run `02-routing-node/train.py` (priority experiment)
+- [ ] Run `03-jailbreak-detection/train.py` (critical for safety)
+- [ ] Analyze training results for both experiments
+- [ ] Test inference latency and JSON format compliance
+- [ ] Document findings and accuracy metrics
 
 ### Short-term (Weeks 2-3)
-- [ ] Experiment 2: Binary routing classifier
-- [ ] Experiment 3: Validation task
-- [ ] Collect real NPC dialogue data from user's game
+- [ ] Collect real routing decisions from user's LangGraph
+- [ ] Collect real jailbreak attempts from production logs
+- [ ] Retrain with real data
+- [ ] Add reasoning output to routing (optional step 2)
 - [ ] Compare different model sizes (1B vs 3B)
+- [ ] Experiment 4: Language detection (English yes/no)
 
 ### Medium-term (Weeks 4-6)
 - [ ] Multi-LoRA approach: Single base model with multiple adapters
@@ -159,11 +186,25 @@ This separation ensures:
 ### Why Separate Workspace?
 The user explicitly requested keeping learning code separate from the original repository to avoid confusion. All experiments go in `/npc-learning-experiments/`.
 
-### Why Start with Sentiment Classification?
-- Simple 3-way classification task (POSITIVE/NEGATIVE/NEUTRAL)
-- Directly applicable to NPC dialogue analysis
-- Easy to understand and evaluate
-- Good foundation for more complex tasks
+### Why Focus on Routing & Jailbreak Detection?
+**User feedback**: Sentiment was not the best first choice. Instead, focus on:
+
+**Routing Node** (Experiment 02):
+- 4-way classification directly applicable to LangGraph flow
+- Structured JSON output teaches format compliance
+- Most impactful for reducing latency in production
+- Multi-class classification is better learning than binary
+
+**Jailbreak Detection** (Experiment 03):
+- Critical for production NPC safety
+- Binary classification (easiest, highest accuracy)
+- Prevents PR disasters and safety issues
+- Can save costs by filtering bad requests early
+
+**Sentiment Classification** (Experiment 01):
+- Kept as reference for learning basics
+- 3-way classification example
+- Less critical for user's immediate needs
 
 ### Why LoRA?
 - User wants to potentially use **single model with multiple LoRA adapters**
@@ -229,13 +270,17 @@ None yet - project just started!
 
 ## 🔄 Update History
 
-- **2025-11-13**: Initial project setup
-  - Created learning workspace
-  - Built first sentiment classification experiment
-  - Established project structure and goals
+- **2025-11-13 (Session 1)**: Initial project setup
+  - Created learning workspace structure
+  - Built sentiment classification experiment (01)
+  - User feedback: Routing and jailbreak detection more valuable
+  - Built routing node experiment (02) - **PRIORITY**
+  - Built jailbreak detection experiment (03) - **CRITICAL**
+  - All three experiments ready to run
+  - Updated focus to structured output and production-critical tasks
 
 ---
 
 **Last Updated**: 2025-11-13
 **Last Updated By**: Claude (Session 1)
-**Next Review**: After running first experiment
+**Next Review**: After user runs routing and jailbreak experiments
